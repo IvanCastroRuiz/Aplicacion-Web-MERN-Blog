@@ -1,0 +1,28 @@
+# NodeJs Express MongoDB
+/node_modules
+
+
+# ReactJS
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/Clases-ReactJS-MinTIC2022---Ciclo-4-Aplicaciones-WEB/node_modules
+/Clases-ReactJS-MinTIC2022---Ciclo-4-Aplicaciones-WEB/.pnp
+/Clases-ReactJS-MinTIC2022---Ciclo-4-Aplicaciones-WEB/.pnp.js
+
+# testing
+/Clases-ReactJS-MinTIC2022---Ciclo-4-Aplicaciones-WEB/coverage
+
+# production
+/Clases-ReactJS-MinTIC2022---Ciclo-4-Aplicaciones-WEB/build
+
+# misc
+/Clases-ReactJS-MinTIC2022---Ciclo-4-Aplicaciones-WEB/.DS_Store
+/Clases-ReactJS-MinTIC2022---Ciclo-4-Aplicaciones-WEB/.env.local
+/Clases-ReactJS-MinTIC2022---Ciclo-4-Aplicaciones-WEB/.env.development.local
+/Clases-ReactJS-MinTIC2022---Ciclo-4-Aplicaciones-WEB/.env.test.local
+/Clases-ReactJS-MinTIC2022---Ciclo-4-Aplicaciones-WEB/.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
