@@ -1,6 +1,7 @@
 // Importamos React
 import React, {Component} from 'react';
 import logo from '../assets/images/logo.svg'
+import logo1 from '../assets/images/logomintic.png'
 import { NavLink } from 'react-router-dom';
  
 //Defenimos una clase
@@ -14,12 +15,15 @@ class Header extends Component {
                         <div id="logo">
                             <div>
                                 <img src={logo} className="app-logo" alt="logotipo"/>
+                                <img src={logo1} className="app-logo" alt="logomintic2022"/>
                             </div>
                             <div>
                                 <span id="brand">
-                                    <strong>Curso</strong>ReactJS
+                                    <strong>Blog </strong> Deportivo
                                 </span>
+                                
                             </div>
+                             
                         </div>
                         {/* MENU */}
                         <nav id="menu">

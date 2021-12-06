@@ -10,8 +10,8 @@ class Home extends Component {
         return (
             <div id="home">
                 <Slider
-                    title="Bienvenido al Curso de ReactJS NRC 53848 - 53849"
-                    curso="Universidad Pontificia Bolivariana - Desarrollo de Aplicaciones WEB"
+                    title="Universidad Pontificia Bolivariana - Desarrollo de Aplicaciones WEB"
+                    curso="Ciclo 4  NRC 53848 - 53849"
                     btn="Ir al Blog"
                     size="slider-big"
                 />
