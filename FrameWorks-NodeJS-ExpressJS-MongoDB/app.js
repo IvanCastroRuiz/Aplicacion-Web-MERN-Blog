@@ -20,7 +20,7 @@ app.get('/', function (req, res){
 var article_routes = require('./routes/articles');
 
 // Middleware 
-app.use(express.urlencoded());
+//app.use(express.urlencoded());
 app.use(express.json());
 
 // Configurar cabeceras y cors

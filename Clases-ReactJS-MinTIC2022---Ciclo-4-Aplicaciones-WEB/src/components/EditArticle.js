@@ -15,9 +15,7 @@ import swal from 'sweetalert2';
 
 class EditArticle extends Component {
     url = Global.url;
-
     articleId = null;
-
     titleRef = React.createRef();
     contentRef = React.createRef();
     state = {
@@ -64,6 +62,7 @@ class EditArticle extends Component {
     }
 
     changeState = () =>{
+        console.log(this.titleRef.current.value);
         this.setState({
             article: {
                 title: this.titleRef.current.value,
@@ -130,8 +129,8 @@ class EditArticle extends Component {
                         });
 
                         swal.fire(
-                            'Articulo creado',
-                            'El articulo ha sido creado correctamente',
+                            'Articulo fue actualizado',
+                            'El articulo ha sido actualizado correctamente',
                             'success'
                         );
 
@@ -175,13 +174,12 @@ class EditArticle extends Component {
                             <label htmlFor="title">Titulo</label>
                             <input type="text" name="title" defaultValue={this.state.article.title} ref={this.titleRef} OnChange={this.changeState} />
                             {/* Revisar documentacion */}
-                            {this.validator.message('title', this.state.article.title, 'required|alpha_num_dash_space')}
+                            {this.validator.message('title', this.state.article.title, 'required')}
 
                         </div>
                         <div className="form-group">
                             <label htmlFor="content">Contenido</label>
                             <textarea name="content" defaultValue={this.state.article.content} ref={this.contentRef} onChange={this.changeState} ></textarea>
-
                             {this.validator.message('content', this.state.article.content, 'required|alpha_num_dash_space')}
 
                         </div>
@@ -190,22 +188,12 @@ class EditArticle extends Component {
                             <label htmlFor="file0">Imagen</label>
                             
                             <input type="file" name="file0" onChange={this.fileChange} />
-                            {/* <div className="image-wrap">
-                                {
-                                    this.state.article.image !== null ? (
-                                        <img src={this.url+"get-image/"+this.state.article.image} alt={this.state.article.title} className="thumb" />
-                                    ) : (
-                                        <img src="https://www.definicionabc.com/wp-content/uploads/Paisaje-Natural.jpg" alt="paisajes" className="thumb" />
-                                    ) 
-                                }
-                            </div> */}
 
                             <ViewImage
                                 title = {this.state.article.title}
                                 image = {this.state.article.image}
                                 url = {this.url}
                             />        
-
 
                             <div className="clearfix"></div>
                         </div>
