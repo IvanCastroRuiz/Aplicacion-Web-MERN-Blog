@@ -3,9 +3,18 @@
 // cargar modulos de node para crear servidor
 var express = require('express');
 var bodyParser = require('body-parser');
+var path = require('path');
 
 // Ejecutar express (http)
 var app = express();
+
+// Cargar Carpeta Public
+
+var publicPath = path.resolve(__dirname, 'public');
+app.use(express.static(publicPath));
+app.get('/', function (req, res){
+    res.sendFile(path.join(__dirname + './index.html'));
+});
 
 // Cargar ficheros rutas las
 var article_routes = require('./routes/articles');

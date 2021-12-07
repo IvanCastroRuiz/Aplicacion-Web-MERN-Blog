@@ -2,8 +2,8 @@
 
 var mongoose = require('mongoose');
 var app = require('./app');
-var port = process.env.PORT || 3900;
-
+//var port = process.env.PORT || 3900;
+var port = 3000;
 // 'mongodb://localhost:27017/api_rest_blog'
 
 mongoose.Promise = global.Promise;

@@ -17,7 +17,7 @@ class Home extends Component {
                 />
                 <div className="center">
                     <div id="content">
-                        <h1 className="subheader">......................</h1>
+                        {/* <h1 className="subheader">......................</h1> */}
                         <Articles 
                             home="true"
                         />
