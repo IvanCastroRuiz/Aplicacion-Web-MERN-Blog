@@ -1,6 +1,6 @@
 # NodeJs Express MongoDB
 /node_modules
-
+variables.env
 
 # ReactJS
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
