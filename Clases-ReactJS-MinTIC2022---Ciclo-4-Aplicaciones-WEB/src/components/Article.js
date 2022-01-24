@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect, NavLink } from 'react-router-dom';
+import { Redirect} from 'react-router-dom';
 import Moment from 'react-moment';
 import "moment/locale/es";
 import axios from 'axios';
@@ -39,18 +39,42 @@ class Article extends Component {
     };
 
     deleteArticle = (id) => {
-        axios.delete(this.url + 'article/' + id)
-            .then(res => {
-                this.setState({
-                    article: res.data.article,
-                    status: "delete"
-                });
+
+        swal.fire({
+            title: 'Estas seguro?',
+            text: "No podrás revertir esto!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, eliminarlo!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete(this.url + 'article/' + id)
+                    .then(res => {
+                        this.setState({
+                            article: res.data.article,
+                            status: "delete"
+                        });
+                        swal.fire(
+                            'Articulo eliminado',
+                            'El articulo ha sido eliminado correctamente',
+                            'success'
+                        );
+                    })
+            }else{
+                this.status = 'error';
                 swal.fire(
-                    'Articulo eliminado',
-                    'El articulo ha sido eliminado correctamente',
-                    'success'
+                'Articulo no eliminado!!',
+                'El articulo no fue elimado',
+                'error'
                 );
-            })
+            };
+        }); 
+    };
+
+    editArticle = (id) => {
+        this.props.history.push("/blog/editar/" + id);
     };
 
     // Metodo render (Se encargara de mostrar la vista al usuario)
@@ -85,18 +109,18 @@ class Article extends Component {
                 <p>
                 {article.content}    
                 </p> 
-                { /* <!-- LIMPIAR FLOTADOS --> */ } 
-                <div className = "clearfix" > </div>                     
-                <button onClick={
-                    () => {
-                        this.deleteArticle(article._id)
-                    }
-
-                } className="btn btn-warning">Eliminar</button>   
-                
-                     
-		        <NavLink to={"/blog/editar/" + article._id} className="btn  btn-danger">Editar</NavLink>        
-
+                <div id="content">
+                    <button onClick={
+                        () => {
+                            this.editArticle(article._id)
+                        }
+                        } className="btn btn-danger">Editar</button>
+                    <button onClick={
+                        () => {
+                            this.deleteArticle(article._id)
+                        }
+                   } className="btn btn-warning">Eliminar</button>   
+                </div>
                 { /* <!-- LIMPIAR FLOTADOS --> */ } 
                 <div className = "clearfix" > </div> 
                 </article>

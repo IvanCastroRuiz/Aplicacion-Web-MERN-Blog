@@ -32,7 +32,7 @@ class CreateArticle extends Component {
         this.setState({
             selectedFile: e.target.files[0] 
         });
-        console.log(this.state.selectedFile);
+        // console.log(this.state);
     }
 
     changeState = () =>{
@@ -42,91 +42,105 @@ class CreateArticle extends Component {
                 content: this.contentRef.current.value
             }         
         });
-        
     }
     saveArticle = (e) => { 
         e.preventDefault();
-        //Rellenar los datos  del state con el formulario
-        this.changeState();   
+        if(this.validator.allValid()){ // Validator
+            swal.fire({
+                title: 'Estas seguro?',
+                text: "No podrás revertir esto!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, crearlo!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    //Rellenar los datos  del state con el formulario
+                    this.changeState();   // Inicio
+                    //Hacer una peticion HTTP por post para guardar el articulos
+                    axios.post(this.url + "save", this.state.article)
+                    .then(res => {
+                        if(res.data.article){
+                            this.setState({
+                                article: res.data.article,
+                                status: "waiting"
+                            });
+                            // Subir el Archivo
+                            if(this.state.selectedFile !== null){
+                                // Sacar el ID del article guardador
+                                var articleId = this.state.article._id;
+                                // Crear form data y añadir el fichero
+                                const formData = new FormData();
+                                formData.append(
+                                    'file0',
+                                    this.state.selectedFile,
+                                    this.state.selectedFile.name
+                                )
+                                // Peticion ajax
+                                axios.post(this.url + 'upload-image/'+ articleId, formData)
+                                    .then(res =>{
+                                        if(res.data.article){
+                                            this.setState({
+                                                article: res.data.article,
+                                                status: "success"
+                                            });
+                                            swal.fire(
+                                                'Articulo creado',
+                                                'El articulo ha sido creado correctamente',
+                                                'success'
+                                            );
+                                        }else{
+                                            this.setState({
+                                                article: res.data.article,
+                                                status: "failed"
+                                            });
+                                            swal.fire(
+                                                'Articulo no fue creado',
+                                                'El articulo NO ha sido creado correctamente',
+                                                'error'
+                                            );
+                                        }
+                                    })    
+                            }else{
+                                this.setState({
+                                    status: 'success'
+                                });
 
+                                swal.fire(
+                                    'Articulo creado',
+                                    'El articulo ha sido creado correctamente',
+                                    'success'
+                                );
 
-        if(this.validator.allValid()){
-            //Hacer una peticion HTTP por post para guardar el articulos
-            axios.post(this.url + "save", this.state.article)
-            .then(res => {
-                if(res.data.article){
-                    this.setState({
-                        article: res.data.article,
-                        status: "waiting"
+                            }
+                        }else{
+                            this.setState({
+                                status: 'failed'
+                            });
+                            swal.fire(
+                                'Articulo no fue creado',
+                                'El articulo NO ha sido creado correctamente',
+                                'error'
+                            );
+                        };
                     });
-                    // Subir el Archivo
-                    if(this.state.selectedFile !== null){
-                        // Sacar el ID del article guardador
-                        var articleId = this.state.article._id;
-                        // Crear form data y añadir el fichero
-                        const formData = new FormData();
-                        formData.append(
-                            'file0',
-                            this.state.selectedFile,
-                            this.state.selectedFile.name
-                        )
-                        // Peticion ajax
-                        axios.post(this.url + 'upload-image/'+ articleId, formData)
-                            .then(res =>{
-                                if(res.data.article){
-                                    this.setState({
-                                        article: res.data.article,
-                                        status: "success"
-                                    });
-                                    swal.fire(
-                                        'Articulo creado',
-                                        'El articulo ha sido creado correctamente',
-                                        'success'
-                                    );
-                                }else{
-                                    this.setState({
-                                        article: res.data.article,
-                                        status: "failed"
-                                    });
-                                    swal.fire(
-                                        'Articulo no fue creado',
-                                        'El articulo NO ha sido creado correctamente',
-                                        'error'
-                                    );
-                                }
-                            })    
-                    }else{
-                        this.setState({
-                            status: 'success'
-                        });
-
-                        swal.fire(
-                            'Articulo creado',
-                            'El articulo ha sido creado correctamente',
-                            'success'
-                        );
-
-                    }
                 }else{
-                    this.setState({
-                        status: 'failed'
-                    });
+                    this.status = 'error';
                     swal.fire(
-                        'Articulo no fue creado',
-                        'El articulo NO ha sido creado correctamente',
-                        'error'
+                    'Articulo no creado!!',
+                    'El articulo no fue creado',
+                    'error'
                     );
                 };
             });
-        }else{
-
+        }else{ // Validator
             this.setState({
                 status: 'failed'
             });
-
             this.validator.showMessages();
             this.forceUpdate();
-        }
+        } // Fin Validator    
     };    
 
     render() {

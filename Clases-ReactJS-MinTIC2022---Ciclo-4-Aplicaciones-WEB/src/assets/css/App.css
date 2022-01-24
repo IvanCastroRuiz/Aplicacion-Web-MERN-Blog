@@ -213,6 +213,12 @@ body {
     background: black;
 }
 
+.btn-danger a{
+    background: rgb(250, 0, 0);
+    color: white !important;
+    float: left;
+}
+
 .btn-danger {
     background: rgb(250, 0, 0);
     color: white !important;

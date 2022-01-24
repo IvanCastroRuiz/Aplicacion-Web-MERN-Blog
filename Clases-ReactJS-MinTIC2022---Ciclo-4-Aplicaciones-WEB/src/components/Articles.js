@@ -43,7 +43,7 @@ class Articles extends Component {
     }
     // Funcion para consultar los ultimos 5 articulos
     getLastArticles = () => {
-        console.log("getArticles");
+        // console.log("getArticles");
         axios.get(this.url+"articles")
             .then(res => {
                 this.setState({
@@ -55,7 +55,7 @@ class Articles extends Component {
     }
     // Funcion para consultar todos los articulos
     getArticles = () => {
-        console.log("getArticles");
+        // console.log("getArticles");
         axios.get(this.url+"articles/last")
             .then(res => {
                 this.setState({

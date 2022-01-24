@@ -48,7 +48,12 @@ var controller = {
             //Asignar valores las articles
             article.title = params.title;
             article.content = params.content;
-            article.image = null;
+
+            if(params.image){
+                article.image = params.image;
+            }else{
+                article.image = null;
+            }
             
             // Guardar el articulo
             article.save((err, articleStore) => {
@@ -252,21 +257,29 @@ var controller = {
         }else{
             // si todo es valido, sacando id de la url
             var articleId = req.params.id;
-            // Buscar el articulo, asignarle el nombre de la imagen y actualizar
-            Article.findOneAndUpdate({_id: articleId}, {image: file_name}, {new: true}, (err, articleUpdate) =>{
-                
-               if(err || !articleUpdate){
+
+            if(articleId){
+                // Buscar el articulo, asignarle el nombre de la imagen y actualizar
+                Article.findOneAndUpdate({_id: articleId}, {image: file_name}, {new: true}, (err, articleUpdate) =>{
+                    
+                if(err || !articleUpdate){
+                        return res.status(200).send({
+                            status: 'error',
+                            article: 'Error al guardar la imagen de articulo'
+                        });    
+                    }    
+                    
                     return res.status(200).send({
-                        status: 'error',
-                        article: 'Error al guardar la imagen de articulo'
-                    });    
-                }    
-                
-                return res.status(200).send({
-                    status: 'success',
-                    article: articleUpdate
+                        status: 'success',
+                        article: articleUpdate
+                    });
                 });
-            });
+            }else{
+                return res.status(200).send({
+                        status: 'success',
+                        image: file_name
+                });
+            }
         }        
     }, // end upload file
 

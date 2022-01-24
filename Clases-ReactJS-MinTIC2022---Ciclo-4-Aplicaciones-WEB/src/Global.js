@@ -1,5 +1,5 @@
 var Global = {
-    // url: "http://localhost:3000/api/",
+    //url: "http://localhost:3900/api/",
     url: "https://app-rest-blog.herokuapp.com/api/"
 };
 
